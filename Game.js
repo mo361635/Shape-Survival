@@ -44,13 +44,13 @@ BasicGame.Game.prototype = {
         this.add.tileSprite(0, 0, 2000, 2000, 'background');
         
         //Set World Stuff
-        this.world.setBounds(0,0,2000,2000);
+        this.world.setBounds(0,0,2000, 2000);
         this.physics.startSystem(Phaser.Physics.P2JS);
         
         //create temp graphic for player
-        this.player = this.add.graphics(0,100);
+        this.player = this.add.graphics(0,0);
         this.player.beginFill(0xffa500);
-        this.player.drawRect(0,0, 100, 100);
+        this.player.drawRect(-25,-25, 50, 50);
         this.physics.p2.enable(this.player);
         
         
@@ -70,8 +70,9 @@ BasicGame.Game.prototype = {
         //  Honestly, just about anything could go here. It's YOUR game after all. Eat your heart out!
         
         //player movement
+        
         this.player.body.setZeroVelocity();
-
+        
         if (this.cursors.up.isDown)
         {
             this.player.body.moveUp(300)
@@ -83,7 +84,7 @@ BasicGame.Game.prototype = {
 
         if (this.cursors.left.isDown)
         {
-            this.player.body.velocity.x = -300;
+            this.player.body.moveLeft(300);
         }
         else if (this.cursors.right.isDown)
         {
