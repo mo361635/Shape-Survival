@@ -52,7 +52,7 @@ BasicGame.Game.prototype = {
         this.player.beginFill(0xffa500);
         this.player.drawRect(-25,-25, 50, 50);
         this.physics.p2.enable(this.player);
-        
+        this.player.body.fixedRotation = true;
         
         //have the camera follow the player
         this.camera.follow(this.player);
@@ -63,6 +63,7 @@ BasicGame.Game.prototype = {
         //zombie stuff
         this.zombie = this.add.sprite(100, 100, 'zombie', 3);
         this.physics.p2.enable(this.zombie);
+        this.zombie.body.fixedRotation = true;
         //this.left = this.zombie.animations.add('left', [2, 1, 2, 0], 4, true);
         //this.right = this.zombie.animations.add('right', [3, 4, 3, 5], 4, true);
     },
