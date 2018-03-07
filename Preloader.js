@@ -30,7 +30,8 @@ BasicGame.Preloader.prototype = {
 		//this.load.bitmapFont('caslon', 'fonts/caslon.png', 'fonts/caslon.xml');
         
 		//	+ lots of other required assets here
-
+        
+        this.load.image('background', 'images/background.png')
 	},
 
 	create: function () {
@@ -56,7 +57,8 @@ BasicGame.Preloader.prototype = {
 		//	this.ready = true;
 		//	this.state.start('MainMenu');
 		//}
-
+        
+        this.state.start('Game');
 	}
 
 };
