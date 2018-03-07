@@ -22,7 +22,8 @@ BasicGame.Game = function (game) {
 
     //  You can use any of these from any function within this State.
     //  But do consider them as being 'reserved words', i.e. don't create a property for your own game called "world" or you'll over-write the world reference.
-
+    
+    this.player = null;
 };
 
 BasicGame.Game.prototype = {
@@ -30,7 +31,15 @@ BasicGame.Game.prototype = {
     create: function () {
 
         //  Honestly, just about anything could go here. It's YOUR game after all. Eat your heart out!
-
+        
+        //Set World Stuff
+        //this.world.setBounds(0,0,1000,1000);
+        //this.physics.startSystem(Phaser.Physics.P2JS);
+        
+        //create temp graphic for player
+        //this.player = this.add.graphics(100,100);
+        //this.drawRect(50, 250, 100, 100);
+        
     },
 
     update: function () {
