@@ -33,12 +33,12 @@ BasicGame.Game.prototype = {
         //  Honestly, just about anything could go here. It's YOUR game after all. Eat your heart out!
         
         //Set World Stuff
-        //this.world.setBounds(0,0,1000,1000);
-        //this.physics.startSystem(Phaser.Physics.P2JS);
+        this.world.setBounds(0,0,1000,1000);
+        this.physics.startSystem(Phaser.Physics.P2JS);
         
         //create temp graphic for player
-        //this.player = this.add.graphics(100,100);
-        //this.drawRect(50, 250, 100, 100);
+        this.player = this.add.graphics(100,100);
+        this.drawRect(50, 250, 100, 100);
         
     },
 
