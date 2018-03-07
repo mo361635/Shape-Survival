@@ -19,12 +19,19 @@ BasicGame.Game = function (game) {
     this.particles; //  the particle manager (Phaser.Particles)
     this.physics;   //  the physics manager (Phaser.Physics)
     this.rnd;       //  the repeatable random number generator (Phaser.RandomDataGenerator)
+    
 
     //  You can use any of these from any function within this State.
     //  But do consider them as being 'reserved words', i.e. don't create a property for your own game called "world" or you'll over-write the world reference.
     
     this.player = null;
     this.cursors = null;
+    
+    this.left;
+    this.right;
+    this.up;
+    this.down;
+    this.zombie;
 };
 
 BasicGame.Game.prototype = {
@@ -46,11 +53,16 @@ BasicGame.Game.prototype = {
         this.player.drawRect(0,0, 100, 100);
         this.physics.p2.enable(this.player);
         
+        
         //have the camera follow the player
         this.camera.follow(this.player);
         
         //input
         this.cursors = this.input.keyboard.createCursorKeys();
+        
+        this.zombie = this.add.sprite(100, 100, 'zombie', 3);
+        //this.left = this.zombie.animations.add('left', [2, 1, 2, 0], 4, true);
+        //this.right = this.zombie.animations.add('right', [3, 4, 3, 5], 4, true);
     },
 
     update: function () {
@@ -77,6 +89,9 @@ BasicGame.Game.prototype = {
         {
             this.player.body.moveRight(300);
         }
+        
+        //zombie movement
+        
 
     },
 
