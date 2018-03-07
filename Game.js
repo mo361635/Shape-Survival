@@ -60,7 +60,9 @@ BasicGame.Game.prototype = {
         //input
         this.cursors = this.input.keyboard.createCursorKeys();
         
+        //zombie stuff
         this.zombie = this.add.sprite(100, 100, 'zombie', 3);
+        this.physics.p2.enable(this.zombie);
         //this.left = this.zombie.animations.add('left', [2, 1, 2, 0], 4, true);
         //this.right = this.zombie.animations.add('right', [3, 4, 3, 5], 4, true);
     },
