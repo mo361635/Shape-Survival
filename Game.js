@@ -24,14 +24,21 @@ BasicGame.Game = function (game) {
     //  You can use any of these from any function within this State.
     //  But do consider them as being 'reserved words', i.e. don't create a property for your own game called "world" or you'll over-write the world reference.
     
-    this.player = null;
+    //Input
     this.cursors = null;
     
-    this.left;
-    this.right;
-    this.up;
-    this.down;
-    this.zombie;
+    //Zombie Animations
+    this.left = null;
+    this.right = null;
+    this.up = null;
+    this.down = null;
+    
+    //Characters
+    this.zombie = null;
+    this.player = null;
+    
+    //Groups
+    this.zombies = null;
 };
 
 BasicGame.Game.prototype = {
@@ -40,30 +47,39 @@ BasicGame.Game.prototype = {
 
         //  Honestly, just about anything could go here. It's YOUR game after all. Eat your heart out!
         
-        //background image
+        //Set Zombies Group
+        //this.zombies = this.add.group();
+        //this.zombies.enableBody = true;
+        
+        //Set Physics
+        this.physics.startSystem(Phaser.Physics.ARCADE);
+        
+        //Set Background Image
         this.add.tileSprite(0, 0, 2000, 2000, 'background');
         
-        //Set World Stuff
+        //Set World 
         this.world.setBounds(0,0,2000, 2000);
-        this.physics.startSystem(Phaser.Physics.P2JS);
         
-        //create temp graphic for player
+        //Create Player
         this.player = this.add.graphics(0,0);
         this.player.beginFill(0xffa500);
-        this.player.drawRect(-25,-25, 50, 50);
-        this.physics.p2.enable(this.player);
-        this.player.body.fixedRotation = true;
+        this.player.drawRect(0,0, 75, 75);
+        
+        //Set Player Physics
+        this.physics.arcade.enable(this.player)
+        this.player.body.collideWorldBounds = true;
         
         //have the camera follow the player
         this.camera.follow(this.player);
         
-        //input
+        //Set Input
         this.cursors = this.input.keyboard.createCursorKeys();
         
-        //zombie stuff
+        //Create Zombie
         this.zombie = this.add.sprite(100, 100, 'zombie', 3);
-        this.physics.p2.enable(this.zombie);
-        this.zombie.body.fixedRotation = true;
+        
+        //Set Zombie Physics
+        this.physics.arcade.enable(this.zombie)
         //this.left = this.zombie.animations.add('left', [2, 1, 2, 0], 4, true);
         //this.right = this.zombie.animations.add('right', [3, 4, 3, 5], 4, true);
     },
@@ -72,31 +88,30 @@ BasicGame.Game.prototype = {
 
         //  Honestly, just about anything could go here. It's YOUR game after all. Eat your heart out!
         
-        //player movement
+        //Reset Player Velocity
+        this.player.body.velocity.x = 0;
+        this.player.body.velocity.y = 0;
         
-        this.player.body.setZeroVelocity();
-        
+        //Get Input Arrow Keys,Then Move Player
         if (this.cursors.up.isDown)
         {
-            this.player.body.moveUp(300)
+            this.player.body.velocity.y = -250;
         }
         else if (this.cursors.down.isDown)
         {
-            this.player.body.moveDown(300);
+            this.player.body.velocity.y = 250;
         }
 
         if (this.cursors.left.isDown)
         {
-            this.player.body.moveLeft(300);
+            this.player.body.velocity.x = -250;
         }
         else if (this.cursors.right.isDown)
         {
-            this.player.body.moveRight(300);
+            this.player.body.velocity.x = 250;
         }
         
-        //zombie movement
-        
-
+        this.physics.arcade.moveToObject(this.zombie, this.player, 100);
     },
 
     quitGame: function (pointer) {
