@@ -27,37 +27,25 @@ BasicGame.Game = function (game) {
     //Input
     this.cursors = null;
     
-    //Zombie Animations
-    this.left = null;
-    this.right = null;
-    this.up = null;
-    this.down = null;
-    
-    //Characters
-    this.zombie = null;
+    //Character
     this.player = null;
     
     //Groups
     this.zombies = null;
+    this.bullets = null;
+    
+    //fire variables
+    this.fireRate = 1000;
+    this.nextFire = 0;
 };
 
 BasicGame.Game.prototype = {
 
     create: function () {
 
-        //  Honestly, just about anything could go here. It's YOUR game after all. Eat your heart out!
-        
-        //Set Zombies Group
-        //this.zombies = this.add.group();
-        //this.zombies.enableBody = true;
-        
-        //Set Physics
+        //Set Game Stuff
         this.physics.startSystem(Phaser.Physics.ARCADE);
-        
-        //Set Background Image
         this.add.tileSprite(0, 0, 2000, 2000, 'background');
-        
-        //Set World 
         this.world.setBounds(0,0,2000, 2000);
         
         //Create Player
@@ -65,7 +53,6 @@ BasicGame.Game.prototype = {
         this.player.beginFill(0xffa500);
         this.player.drawRect(0,0, 75, 75);
         
-        //Set Player Physics
         this.physics.arcade.enable(this.player)
         this.player.body.collideWorldBounds = true;
         
@@ -75,19 +62,32 @@ BasicGame.Game.prototype = {
         //Set Input
         this.cursors = this.input.keyboard.createCursorKeys();
         
-        //Create Zombie
-        this.zombie = this.add.sprite(100, 100, 'zombie', 3);
+        //Set Groups
+        this.zombies = this.add.group();
+        this.bullets = this.add.group();
+        this.bullets.enableBody = true;
+        this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
+        this.bullets.setAll('checkWorldBounds', true);
+        this.bullets.setAll('outOfBoundsKill', true);
         
-        //Set Zombie Physics
-        this.physics.arcade.enable(this.zombie)
-        //this.left = this.zombie.animations.add('left', [2, 1, 2, 0], 4, true);
-        //this.right = this.zombie.animations.add('right', [3, 4, 3, 5], 4, true);
+        //Set Group Physics And Collisions
+        this.zombies.enableBody = true;
+        
+        //Create Zombies in the group zombies
+        this.zombies.create(100,1000, 'zombie', 3);
+        this.zombies.create (600,600, 'zombie', 3);
+        
+        //Loop through all added zombies and add what is neccecary
+        for(var i = 0; i < this.zombies.length; i++){
+            var thisZombie = this.zombies.getChildAt(i);
+            thisZombie.animations.add('left', [0,1]);
+            thisZombie.animations.add('right', [4,5]);
+            thisZombie.body.setSize(100,100,25,25);
+        }
     },
 
     update: function () {
 
-        //  Honestly, just about anything could go here. It's YOUR game after all. Eat your heart out!
-        
         //Reset Player Velocity
         this.player.body.velocity.x = 0;
         this.player.body.velocity.y = 0;
@@ -111,7 +111,28 @@ BasicGame.Game.prototype = {
             this.player.body.velocity.x = 250;
         }
         
-        this.physics.arcade.moveToObject(this.zombie, this.player, 100);
+        //fire the bullet
+        if (this.input.activePointer.isDown)
+        {
+            this.fire();
+        }
+        
+        //make all zombies move towards the player.
+        if(this.zombies.length != 0 && this.player.alive)
+        {
+            for(var i = 0; i < this.zombies.length; i++){
+                var thisZombie = this.zombies.getChildAt(i);
+                this.physics.arcade.moveToObject(thisZombie, this.player, 100);
+                if(thisZombie.x > this.player.x)
+                    thisZombie.animations.play('left', 4, true);
+                else
+                    thisZombie.animations.play('right', 5, true);
+            }
+        }   
+
+        //Collision Detections
+        this.physics.arcade.overlap(this.bullets, this.zombies, this.bulletandzombie, null, this);
+        this.physics.arcade.overlap(this.player, this.zombies, this.playerandzombie, null, this);
     },
 
     quitGame: function (pointer) {
@@ -125,8 +146,32 @@ BasicGame.Game.prototype = {
     },
     
     render: function() {
-        //this.debug.cameraInfo(this.camera, 32, 32);
-        //Phaser.Utils.debug.camera(this.camera);
-        //this.debug.cameraInfo(this.camera, 32, 32);
+  
+    },
+    
+    fire: function() {
+        if (this.time.now > this.nextFire && this.player.alive)
+        {
+            this.nextFire = this.time.now + this.fireRate;
+
+            //Create Bullet
+            var bullet = this.add.graphics(this.player.position.x + 37.5,this.player.position.y + 37.5);
+            bullet.beginFill(0x7f5200);
+            bullet.drawCircle(0,0, 25, 25);
+            this.world.bringToTop(bullet);
+            this.bullets.add(bullet);
+            
+            this.physics.arcade.moveToPointer(bullet, 300);
+            
+        }
+    },
+    
+    bulletandzombie: function(bullet, zombie) {
+        bullet.kill();
+        zombie.kill();
+    },
+    
+    playerandzombie: function(player,zombie) {
+        player.kill();
     }
 };
