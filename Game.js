@@ -74,8 +74,16 @@ BasicGame.Game.prototype = {
         this.zombies.enableBody = true;
         
         //Create Zombies in the group zombies
-        this.zombies.create(100,1000, 'zombie', 3);
-        this.zombies.create (600,600, 'zombie', 3);
+        this.zombies.create(100, 1000, 'zombie', 3);
+        this.zombies.create (600, 600, 'zombie', 3);
+        this.zombies.create(200, 700, 'zombie', 3);
+        this.zombies.create (250, 1100, 'zombie', 3);
+        this.zombies.create(500, 1500, 'zombie', 3);
+        this.zombies.create (750, 300, 'zombie', 3);
+        this.zombies.create(900,1000, 'zombie', 3);
+        this.zombies.create (1100,1300, 'zombie', 3);
+        this.zombies.create(1600,1700, 'zombie', 3);
+        this.zombies.create (1900,1900, 'zombie', 3);
         
         //Loop through all added zombies and add what is neccecary
         for(var i = 0; i < this.zombies.length; i++){
@@ -84,10 +92,15 @@ BasicGame.Game.prototype = {
             thisZombie.animations.add('right', [4,5]);
             thisZombie.body.setSize(100,100,25,25);
         }
+        
+    //  Text
+    stateText = this.game.add.text(100, 100,"You Died", { font: '60px Arial', fill: '#fff' });
+    stateText.anchor.setTo(0.5, 0.5);
+    stateText.visible = false;
     },
 
     update: function () {
-
+        
         //Reset Player Velocity
         this.player.body.velocity.x = 0;
         this.player.body.velocity.y = 0;
@@ -128,11 +141,24 @@ BasicGame.Game.prototype = {
                 else
                     thisZombie.animations.play('right', 5, true);
             }
-        }   
+        }
+        
+        //are all zombies dead?
+        if(this.zombies)
+
+        
+        //is player dead?
+        if(this.player.alive == false)
+            {                
+            stateText.x = (this.player.x); 
+            stateText.y = (this.player.y);
+            stateText.visible = true;
+            }
 
         //Collision Detections
         this.physics.arcade.overlap(this.bullets, this.zombies, this.bulletandzombie, null, this);
         this.physics.arcade.overlap(this.player, this.zombies, this.playerandzombie, null, this);
+        
     },
 
     quitGame: function (pointer) {

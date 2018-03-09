@@ -1,0 +1,20 @@
+Hey Oz, I implemented little text showing a "You died" when the player dies and a shooty sound for bullet(W.I.P?*), i spent too much time trying to find out how to set text to be placed at the player's death spot. Thank you for helping and doing so much on the programming while I was gone, i am terribly sorry I couldnt add more. Here is a list of things you can add if I get us a day more and want to add anymore:
+
+-Was trying to do a "You Win!" after all 10 zombies are dead
+-Was trying to create a for/if loop for 10 zombies to be spawned randomly on the canvas but just placed 10 zombies quickly for testing sake.
+-There is probably a better way to put in the text for You lose and You win, but I was too focused trying to figure out how to add text on the player in general.
+-Ending the game when all 10 zombies are dead? 
+
+You do not at all have to do any or all of these, only suggestions if you wanted any polishing.
+I think I can get us some time Monday we get back from break since we've been "playing tag", but I may or may not get there Monday depending on spring break plans... 
+
+I promise the schedule/teamwork will not be this complicated again, hopefully you understand the hecticness.
+
+
+
+Text me: 214-499-7783 or Steam: Life=Death-r.i.p Snickers <3 or Snapchat: idontusethis25 for anything and I might see you Monday, else Tuesday!
+
+
+
+
+EDIT: I got us some time Monday in case we want to do anything more.

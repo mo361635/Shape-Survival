@@ -31,7 +31,7 @@ BasicGame.Preloader.prototype = {
         
 		//	+ lots of other required assets here
         
-        this.load.image('background', 'images/background.png');
+        this.load.image('background', 'images/background3.png');
         this.load.spritesheet('zombie', 'images/Circle-Spritesheet.png', 150, 150);
 	},
 
